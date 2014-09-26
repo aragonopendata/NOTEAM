@@ -68,7 +68,7 @@ public class ActivitySplash extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... params) {
             // COMUNIDADES
-            String nextpage = "http://opendata.aragon.es/recurso/territorio/ComunidadAutonoma?_sort=label&_page=0";
+            String nextpage = "http://opendata.aragon.es/recurso/territorio/ComunidadAutonoma?_sort=label&_page=0&_pageSize=50";
             while (!TextUtils.isEmpty(nextpage)) {
                 String response = Utils.getResponse(nextpage + "&api_key=" + Utils.API_KEY);
                 try {
@@ -83,7 +83,7 @@ public class ActivitySplash extends ActionBarActivity {
                         String nombre = item.getString("label");
 
                         publishProgress(nombre);
-                        Thread.sleep(200);
+                        Thread.sleep(20);
 
                         ContentValues values = new ContentValues();
                         values.put(DatabaseConstants.Comunidades.NOMBRE, nombre);
@@ -101,7 +101,7 @@ public class ActivitySplash extends ActionBarActivity {
             }
 
             // PROVINCIAS
-            nextpage = "http://opendata.aragon.es/recurso/territorio/Provincia?_sort=label&_page=0";
+            nextpage = "http://opendata.aragon.es/recurso/territorio/Provincia?_sort=label&_page=0&_pageSize=50";
             while (!TextUtils.isEmpty(nextpage)) {
                 String response = Utils.getResponse(nextpage + "&api_key=" + Utils.API_KEY);
                 try {
@@ -116,7 +116,7 @@ public class ActivitySplash extends ActionBarActivity {
                         String nombre = item.getString("label");
 
                         publishProgress(nombre);
-                        Thread.sleep(200);
+                        Thread.sleep(20);
 
                         ContentValues values = new ContentValues();
                         values.put(DatabaseConstants.Provincias.NOMBRE, nombre);
@@ -134,7 +134,7 @@ public class ActivitySplash extends ActionBarActivity {
             }
 
             // COMARCAS
-            nextpage = "http://opendata.aragon.es/recurso/territorio/Comarca?_sort=label&_page=0";
+            nextpage = "http://opendata.aragon.es/recurso/territorio/Comarca?_sort=label&_page=0&_pageSize=50";
             while (!TextUtils.isEmpty(nextpage)) {
                 String response = Utils.getResponse(nextpage + "&api_key=" + Utils.API_KEY);
                 try {
@@ -150,7 +150,7 @@ public class ActivitySplash extends ActionBarActivity {
                         String provincia = item.optString("provincia");
 
                         publishProgress(nombre);
-                        Thread.sleep(200);
+                        Thread.sleep(20);
 
                         ContentValues values = new ContentValues();
                         values.put(DatabaseConstants.Comarcas.NOMBRE, nombre);
@@ -168,7 +168,7 @@ public class ActivitySplash extends ActionBarActivity {
             }
 
             // MUNICIPIOS
-            nextpage = "http://opendata.aragon.es/recurso/territorio/Municipio?_sort=label&_page=0";
+            nextpage = "http://opendata.aragon.es/recurso/territorio/Municipio?_sort=label&_page=0&_pageSize=50";
             while (!TextUtils.isEmpty(nextpage)) {
                 String response = Utils.getResponse(nextpage + "&api_key=" + Utils.API_KEY);
                 try {
@@ -187,7 +187,7 @@ public class ActivitySplash extends ActionBarActivity {
                         }
 
                         publishProgress(nombre);
-                        Thread.sleep(200);
+                        Thread.sleep(20);
 
                         ContentValues values = new ContentValues();
                         values.put(DatabaseConstants.Municipios.NOMBRE, nombre);

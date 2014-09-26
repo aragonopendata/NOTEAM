@@ -15,14 +15,18 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/ConocesAragon" >
-        <activity android:name="noteam.conocesaragon.ActivitySplash" >
+        <activity
+            android:name="noteam.conocesaragon.ActivitySplash"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="noteam.conocesaragon.MainActivity" >
+        <activity
+            android:name="noteam.conocesaragon.MainActivity"
+            android:screenOrientation="portrait" >
         </activity>
 
         <provider
