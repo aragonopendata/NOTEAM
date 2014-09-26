@@ -7,8 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.ContentValues;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.widget.TextView;
@@ -29,7 +33,34 @@ public class ActivitySplash extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        new SyncAragopedia().execute();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPref.getBoolean("first-run", true)) {
+            Editor edit = sharedPref.edit();
+            edit.putBoolean("first-run", false);
+            edit.apply();
+
+            new SyncAragopedia().execute();
+
+        } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            launchMainActivity();
+                        }
+                    });
+                }
+            }).start();
+        }
+
     }
 
     private class SyncAragopedia extends AsyncTask<Void, String, Void> {
@@ -50,7 +81,9 @@ public class ActivitySplash extends ActionBarActivity {
                         JSONObject item = items.getJSONObject(i);
 
                         String nombre = item.getString("label");
+
                         publishProgress(nombre);
+                        Thread.sleep(200);
 
                         ContentValues values = new ContentValues();
                         values.put(DatabaseConstants.Comunidades.NOMBRE, nombre);
@@ -61,6 +94,8 @@ public class ActivitySplash extends ActionBarActivity {
                     }
 
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -79,7 +114,9 @@ public class ActivitySplash extends ActionBarActivity {
                         JSONObject item = items.getJSONObject(i);
 
                         String nombre = item.getString("label");
+
                         publishProgress(nombre);
+                        Thread.sleep(200);
 
                         ContentValues values = new ContentValues();
                         values.put(DatabaseConstants.Provincias.NOMBRE, nombre);
@@ -90,6 +127,8 @@ public class ActivitySplash extends ActionBarActivity {
                     }
 
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -108,18 +147,22 @@ public class ActivitySplash extends ActionBarActivity {
                         JSONObject item = items.getJSONObject(i);
 
                         String nombre = item.getString("label");
-                        // String provincia = item.getString("provincia");
+                        String provincia = item.optString("provincia");
+
                         publishProgress(nombre);
+                        Thread.sleep(200);
 
                         ContentValues values = new ContentValues();
                         values.put(DatabaseConstants.Comarcas.NOMBRE, nombre);
-                        values.put(DatabaseConstants.Comarcas.PROVINCIA, "");
+                        values.put(DatabaseConstants.Comarcas.PROVINCIA, provincia);
 
                         getContentResolver().insert(DatabaseConstants.CONTENT_URI_COMARCAS,
                                 values);
                     }
 
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -138,9 +181,13 @@ public class ActivitySplash extends ActionBarActivity {
                         JSONObject item = items.getJSONObject(i);
 
                         String nombre = item.getString("label");
-                        String comarca = item.getString("comarca");
-                        comarca = comarca.substring(comarca.lastIndexOf("/"));
+                        String comarca = item.optString("comarca");
+                        if (!TextUtils.isEmpty(comarca)) {
+                            comarca = comarca.substring(comarca.lastIndexOf("/"));
+                        }
+
                         publishProgress(nombre);
+                        Thread.sleep(200);
 
                         ContentValues values = new ContentValues();
                         values.put(DatabaseConstants.Municipios.NOMBRE, nombre);
@@ -151,6 +198,8 @@ public class ActivitySplash extends ActionBarActivity {
                     }
 
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -168,7 +217,13 @@ public class ActivitySplash extends ActionBarActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+
+            launchMainActivity();
         }
     }
 
+    private void launchMainActivity() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
 }
