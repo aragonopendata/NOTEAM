@@ -7,6 +7,9 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -19,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="noteam.conocesaragon.db.DatabaseProvider"
+            android:authorities="noteam.conocesaragon.provider"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>
