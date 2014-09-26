@@ -22,6 +22,10 @@ public class DatabaseConstants {
         public static final String _ID = BaseColumns._ID;
         public static final String NOMBRE = "nombre";
         public static final String COMARCA = "comarca";
+        public static final String AREA = "area";
+        public static final String POB_HOMBRES = "pob_hombres";
+        public static final String POB_MUJERES = "pob_mujeres";
+        public static final String ALCALDE = "alcalde";
         public final static String SORT_ORDER = NOMBRE + " ASC";
     }
 

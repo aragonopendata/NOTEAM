@@ -19,17 +19,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseConstants.Municipios.TABLE_NAME + " ("
                 + DatabaseConstants.Municipios._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + DatabaseConstants.Municipios.NOMBRE + " TEXT, "
-                + DatabaseConstants.Municipios.COMARCA + " INT)");
+                + DatabaseConstants.Municipios.COMARCA + " TEXT, "
+                + DatabaseConstants.Municipios.AREA + " REAL, "
+                + DatabaseConstants.Municipios.POB_HOMBRES + " INTEGER, "
+                + DatabaseConstants.Municipios.POB_MUJERES + " INTEGER, "
+                + DatabaseConstants.Municipios.ALCALDE + " TEXT)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseConstants.Comarcas.TABLE_NAME + " ("
                 + DatabaseConstants.Comarcas._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + DatabaseConstants.Comarcas.NOMBRE + " TEXT, "
-                + DatabaseConstants.Comarcas.PROVINCIA + " INT)");
+                + DatabaseConstants.Comarcas.PROVINCIA + " TEXT)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseConstants.Provincias.TABLE_NAME + " ("
                 + DatabaseConstants.Provincias._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + DatabaseConstants.Provincias.NOMBRE + " TEXT, "
-                + DatabaseConstants.Provincias.COMUNIDAD + " INT)");
+                + DatabaseConstants.Provincias.COMUNIDAD + " TEXT)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseConstants.Comunidades.TABLE_NAME + " ("
                 + DatabaseConstants.Comunidades._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "

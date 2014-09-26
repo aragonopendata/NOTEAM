@@ -168,7 +168,7 @@ public class ActivitySplash extends ActionBarActivity {
             }
 
             // MUNICIPIOS
-            nextpage = "http://opendata.aragon.es/recurso/territorio/Municipio?_sort=label&_page=0&_pageSize=50";
+            nextpage = "http://opendata.aragon.es/recurso/territorio/Municipio?_sort=label&_page=0&_view=ampliada&_pageSize=50";
             while (!TextUtils.isEmpty(nextpage)) {
                 String response = Utils.getResponse(nextpage + "&api_key=" + Utils.API_KEY);
                 try {
@@ -182,6 +182,10 @@ public class ActivitySplash extends ActionBarActivity {
 
                         String nombre = item.getString("label");
                         String comarca = item.optString("comarca");
+                        Double area = item.optDouble("areaTotal");
+                        Integer pobHombres = item.optInt("hombres");
+                        Integer pobMujeres = item.optInt("mujeres");
+                        String alcalde = toProperCase(item.optString("alcalde"));
                         if (!TextUtils.isEmpty(comarca)) {
                             comarca = comarca.substring(comarca.lastIndexOf("/"));
                         }
@@ -192,6 +196,10 @@ public class ActivitySplash extends ActionBarActivity {
                         ContentValues values = new ContentValues();
                         values.put(DatabaseConstants.Municipios.NOMBRE, nombre);
                         values.put(DatabaseConstants.Municipios.COMARCA, comarca);
+                        values.put(DatabaseConstants.Municipios.AREA, area);
+                        values.put(DatabaseConstants.Municipios.POB_HOMBRES, pobHombres);
+                        values.put(DatabaseConstants.Municipios.POB_MUJERES, pobMujeres);
+                        values.put(DatabaseConstants.Municipios.ALCALDE, alcalde);
 
                         getContentResolver().insert(DatabaseConstants.CONTENT_URI_MUNICIPIOS,
                                 values);
@@ -218,7 +226,28 @@ public class ActivitySplash extends ActionBarActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
+            SharedPreferences sharedPref = PreferenceManager
+                    .getDefaultSharedPreferences(ActivitySplash.this);
+            Editor edit = sharedPref.edit();
+            edit.putBoolean("first-run", false);
+            edit.apply();
+
             launchMainActivity();
+        }
+
+        private String toProperCase(String text) {
+            if (TextUtils.isEmpty(text)) {
+                return text;
+            }
+
+            String[] words = text.split("[.\\s]+");
+
+            for (int i = 0; i < words.length; i++) {
+                words[i] = words[i].substring(0, 1).toUpperCase()
+                        + words[i].substring(1).toLowerCase();
+            }
+
+            return TextUtils.join(" ", words);
         }
     }
 
