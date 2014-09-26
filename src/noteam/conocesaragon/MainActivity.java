@@ -1,8 +1,11 @@
 package noteam.conocesaragon;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -13,7 +16,7 @@ import com.google.android.gms.location.LocationRequest;
 
 public class MainActivity extends ActionBarActivity implements
         GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
+        GooglePlayServicesClient.OnConnectionFailedListener, LocationListener, OnClickListener {
 
     private LocationClient mLocationClient;
     private LocationRequest mLocationRequest;
@@ -29,6 +32,10 @@ public class MainActivity extends ActionBarActivity implements
         btnJugar = (Button) findViewById(R.id.btnJugar);
         btnDescubre = (Button) findViewById(R.id.btnDescubre);
         btnDonde = (Button) findViewById(R.id.btnDonde);
+
+        btnJugar.setOnClickListener(this);
+        btnDescubre.setOnClickListener(this);
+        btnDonde.setOnClickListener(this);
 
         mLocationClient = new LocationClient(this, this, this);
 
@@ -76,6 +83,27 @@ public class MainActivity extends ActionBarActivity implements
         btnDonde.setEnabled(true);
         btnDonde.setText("Dónde estoy?");
         mLocationClient.removeLocationUpdates(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnDescubre:
+                startActivity(new Intent(this, InfoActivity.class));
+                break;
+
+            case R.id.btnDonde:
+                Intent intent = new Intent(this, InfoActivity.class);
+                intent.putExtra("latitud", location.getLatitude());
+                intent.putExtra("longitud", location.getLongitude());
+                startActivity(intent);
+                break;
+
+            case R.id.btnJugar:
+
+                break;
+
+        }
     }
 
 }

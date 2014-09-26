@@ -33,6 +33,10 @@
             android:name="noteam.conocesaragon.MainActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="noteam.conocesaragon.InfoActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <provider
             android:name="noteam.conocesaragon.db.DatabaseProvider"

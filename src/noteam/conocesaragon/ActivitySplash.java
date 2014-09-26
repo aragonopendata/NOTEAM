@@ -187,7 +187,8 @@ public class ActivitySplash extends ActionBarActivity {
                         Integer pobMujeres = item.optInt("mujeres");
                         String alcalde = toProperCase(item.optString("alcalde"));
                         if (!TextUtils.isEmpty(comarca)) {
-                            comarca = comarca.substring(comarca.lastIndexOf("/"));
+                            comarca = comarca.substring(comarca.lastIndexOf("/") + 1);
+                            comarca = comarca.replace("_", " ");
                         }
 
                         publishProgress(nombre);
