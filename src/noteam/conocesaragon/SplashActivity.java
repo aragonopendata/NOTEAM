@@ -17,7 +17,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-public class ActivitySplash extends ActionBarActivity {
+public class SplashActivity extends ActionBarActivity {
 
     private TextView txtLoading;
 
@@ -228,7 +228,7 @@ public class ActivitySplash extends ActionBarActivity {
             super.onPostExecute(result);
 
             SharedPreferences sharedPref = PreferenceManager
-                    .getDefaultSharedPreferences(ActivitySplash.this);
+                    .getDefaultSharedPreferences(SplashActivity.this);
             Editor edit = sharedPref.edit();
             edit.putBoolean("first-run", false);
             edit.apply();

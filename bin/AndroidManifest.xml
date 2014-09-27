@@ -21,7 +21,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="noteam.conocesaragon.ActivitySplash"
+            android:name="noteam.conocesaragon.SplashActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +35,10 @@
         </activity>
         <activity
             android:name="noteam.conocesaragon.InfoActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="noteam.conocesaragon.JuegoActivity"
             android:screenOrientation="portrait" >
         </activity>
 
