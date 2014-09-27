@@ -107,7 +107,9 @@ public class MainActivity extends ActionBarActivity implements
                 break;
 
             case R.id.btnJugar:
-                startActivity(new Intent(this, JuegoActivity.class));
+                Intent juego = new Intent(this, JuegoActivity.class);
+                juego.putExtra("new", true);
+                startActivity(juego);
                 break;
 
         }

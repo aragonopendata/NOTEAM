@@ -41,6 +41,15 @@
             android:name="noteam.conocesaragon.JuegoActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="noteam.conocesaragon.ResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="noteam.conocesaragon.FinalActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <provider
             android:name="noteam.conocesaragon.db.DatabaseProvider"
