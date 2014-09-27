@@ -24,8 +24,6 @@ public class MainActivity extends ActionBarActivity implements
 
     private Button btnJugar, btnDescubre, btnDonde;
 
-    private float distancia = 5f;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +40,7 @@ public class MainActivity extends ActionBarActivity implements
         mLocationClient = new LocationClient(this, this, this);
 
         mLocationRequest = LocationRequest.create();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         mLocationRequest.setInterval(5000);
         mLocationRequest.setFastestInterval(5000);
     }
@@ -81,15 +79,10 @@ public class MainActivity extends ActionBarActivity implements
 
     @Override
     public void onLocationChanged(Location location) {
-        if (location.getAccuracy() < distancia) {
-            this.location = location;
-            btnDonde.setEnabled(true);
-            btnDonde.setText("Dónde estoy?");
-            mLocationClient.removeLocationUpdates(this);
-
-        } else {
-            distancia *= 2;
-        }
+        this.location = location;
+        btnDonde.setEnabled(true);
+        btnDonde.setText("Dónde estoy?");
+        mLocationClient.removeLocationUpdates(this);
     }
 
     @Override
