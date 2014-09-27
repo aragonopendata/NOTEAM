@@ -10,6 +10,12 @@
         android:orientation="horizontal"
         android:padding="10dp" >
 
+        <ImageButton
+            android:id="@+id/btnRandom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_random" />
+
         <EditText
             android:id="@+id/editBuscar"
             android:layout_width="0dp"
@@ -17,6 +23,9 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
             android:textSize="20sp" />
 
         <ImageButton
@@ -26,10 +35,11 @@
             android:src="@drawable/btn_buscar" />
     </LinearLayout>
 
-    <TextView android:layout_margin="15dp"
+    <TextView
         android:id="@+id/txtData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="15dp"
         android:gravity="center_vertical"
         android:textSize="15sp" />
 
