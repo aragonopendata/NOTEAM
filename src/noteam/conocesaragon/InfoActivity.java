@@ -87,6 +87,8 @@ public class InfoActivity extends ActionBarActivity implements OnClickListener {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
+            hideKeyboard();
+
             editBuscar.setText(result);
             buscaNombre(result);
         }
@@ -118,14 +120,53 @@ public class InfoActivity extends ActionBarActivity implements OnClickListener {
                 DatabaseConstants.Municipios.AREA, DatabaseConstants.Municipios.POB_HOMBRES,
                 DatabaseConstants.Municipios.POB_MUJERES, DatabaseConstants.Municipios.ALCALDE };
 
-        String selection = DatabaseConstants.Municipios.NOMBRE + " like ?";
-        String[] selectionArgs = new String[] { "%" + buscar + "%" };
+        String selection = DatabaseConstants.Municipios.NOMBRE + "=?";
+
+        buscar = buscar.substring(0, 1).toUpperCase() + buscar.substring(1).toLowerCase();
+        String[] selectionArgs = new String[] { buscar };
 
         Cursor cursor = getContentResolver().query(DatabaseConstants.CONTENT_URI_MUNICIPIOS,
                 projection, selection, selectionArgs, null);
 
         if ((cursor == null) || (cursor.getCount() == 0)) {
-            txtData.setText("No se han encontrado resultados para el texto buscado. Revisa que lo hayas escrito bien y vuelve a probar.");
+            selection = DatabaseConstants.Municipios.NOMBRE + " like ?";
+            selectionArgs = new String[] { "%" + buscar + "%" };
+
+            cursor = getContentResolver().query(DatabaseConstants.CONTENT_URI_MUNICIPIOS,
+                    projection, selection, selectionArgs, null);
+
+            if ((cursor == null) || (cursor.getCount() == 0)) {
+                txtData.setText("No se han encontrado resultados para el texto buscado. Revisa que lo hayas escrito bien y vuelve a probar.");
+
+            } else {
+                cursor.moveToFirst();
+
+                String nombre = cursor.getString(cursor
+                        .getColumnIndex(DatabaseConstants.Municipios.NOMBRE));
+                String comarca = cursor.getString(cursor
+                        .getColumnIndex(DatabaseConstants.Municipios.COMARCA));
+                Double area = cursor.getDouble(cursor
+                        .getColumnIndex(DatabaseConstants.Municipios.AREA));
+                Integer pobHombres = cursor.getInt(cursor
+                        .getColumnIndex(DatabaseConstants.Municipios.POB_HOMBRES));
+                Integer pobMmujeres = cursor.getInt(cursor
+                        .getColumnIndex(DatabaseConstants.Municipios.POB_MUJERES));
+                String alcalde = cursor.getString(cursor
+                        .getColumnIndex(DatabaseConstants.Municipios.ALCALDE));
+
+                String data = "<h3>Nombre municipio: " + nombre + "</h3><br><br>" +
+                        "<b>Comarca:</b> " + comarca + "<br><br>" +
+                        "<b>Área:</b> " + area + " km<sup>2</sup><br><br>" +
+                        "<b>Poblacion:</b> " + (pobHombres + pobMmujeres) + "<br>" +
+                        "&nbsp;&nbsp;&nbsp;&nbsp;Hombres: " + pobHombres + "<br>" +
+                        "&nbsp;&nbsp;&nbsp;&nbsp;Mujeres: " + pobMmujeres + "<br><br>" +
+                        "<b>Densidad:</b> "
+                        + String.format("%.2f", ((pobHombres + pobMmujeres) / area))
+                        + " hab/km<sup>2</sup><br><br>" + "<b>Alcalde:</b> " + alcalde;
+
+                txtData.setText(Html.fromHtml(data));
+                editBuscar.setText(nombre);
+            }
 
         } else {
             cursor.moveToFirst();
@@ -156,6 +197,7 @@ public class InfoActivity extends ActionBarActivity implements OnClickListener {
             txtData.setText(Html.fromHtml(data));
             editBuscar.setText(nombre);
         }
+
     }
 
     private void buscaRandom() {
