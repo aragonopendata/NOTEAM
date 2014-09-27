@@ -2,6 +2,7 @@ package noteam.conocesaragon;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +22,10 @@ public class ResultActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_result);
-        setFinishOnTouchOutside(false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            setFinishOnTouchOutside(false);
+        }
 
         txtTitulo = (TextView) findViewById(R.id.txtTitulo);
         txtTexto = (TextView) findViewById(R.id.txtTexto);

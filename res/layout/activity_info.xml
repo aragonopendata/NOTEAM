@@ -35,12 +35,18 @@
             android:src="@drawable/btn_buscar" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/txtData"
+    <ScrollView 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:gravity="center_vertical"
-        android:textSize="15sp" />
+        android:fillViewport="true" >
+
+        <TextView
+            android:id="@+id/txtData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:gravity="center_vertical"
+            android:textSize="15sp" />
+    </ScrollView>
 
 </LinearLayout>

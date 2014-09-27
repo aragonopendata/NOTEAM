@@ -195,8 +195,9 @@ public class JuegoActivity extends ActionBarActivity implements OnClickListener 
         @Override
         public void onTick(long millisUntilFinished) {
             txtTiempo.setText(String.format("%.2f", (millisUntilFinished / 1000d)) + " segundos");
-            milis = Integer.valueOf(String.format("%.2f", (millisUntilFinished / 1000d)).replace(
-                    ".", ""));
+            String milistemp = String.format("%.2f", (millisUntilFinished / 1000d))
+                    .replace(".", "").replace(",", "");
+            milis = Integer.valueOf(milistemp);
         }
 
         @Override
